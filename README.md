@@ -1,0 +1,380 @@
+# NUS NextBus Mock API 🚌
+
+A fully functional mock backend server for the NUS NextBus application, based on the reverse-engineered OpenAPI specification. Perfect for frontend development and testing without access to the actual backend.
+
+## Features ✨
+
+- ✅ All 11 API endpoints implemented
+- ✅ Realistic mock data based on actual NUS campus locations
+- ✅ Dynamic bus arrival times and positions
+- ✅ Multiple shuttle routes (A1, A2, D1, D2, BTC)
+- ✅ 15+ bus stops across NUS campus
+- ✅ CORS enabled for frontend integration
+- ✅ Optional Basic Authentication
+- ✅ Easy deployment to Vercel, Railway, or Render
+
+## Quick Start 🚀
+
+### Local Development
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Start the server:**
+   ```bash
+   npm start
+   ```
+
+3. **For development with auto-reload:**
+   ```bash
+   npm run dev
+   ```
+
+4. **Access the API:**
+   ```
+   http://localhost:3000
+   ```
+
+## API Endpoints 📍
+
+### Base URL
+- Local: `http://localhost:3000`
+- Production: `https://your-deployment-url.com`
+
+### Available Endpoints
+
+| Endpoint | Method | Parameters | Description |
+|----------|--------|------------|-------------|
+| `/publicity` | GET | - | Get publicity banners and frequency |
+| `/BusStops` | GET | - | Get list of all bus stops |
+| `/PickupPoint` | GET | `route_code` | Get pickup points for a route |
+| `/ShuttleService` | GET | `busstopname` | Get shuttle services at a bus stop |
+| `/ActiveBus` | GET | `route_code` | Get active buses on a route |
+| `/BusLocation` | GET | `veh_plate` | Get location of a specific bus |
+| `/RouteMinMaxTime` | GET | `route_code` | Get route operating hours |
+| `/ServiceDescription` | GET | - | Get descriptions of all routes |
+| `/Announcements` | GET | - | Get system announcements |
+| `/TickerTapes` | GET | - | Get ticker tape messages |
+| `/CheckPoint` | GET | `route_code` | Get checkpoints for a route |
+
+### Example Requests
+
+**Get all bus stops:**
+```bash
+curl http://localhost:3000/BusStops
+```
+
+**Get shuttle service at University Town:**
+```bash
+curl http://localhost:3000/ShuttleService?busstopname=UTOWN
+```
+
+**Get active buses on route A1:**
+```bash
+curl http://localhost:3000/ActiveBus?route_code=A1
+```
+
+**Get pickup points for route A1:**
+```bash
+curl http://localhost:3000/PickupPoint?route_code=A1
+```
+
+**Get route operating times:**
+```bash
+curl http://localhost:3000/RouteMinMaxTime?route_code=A1
+```
+
+## Available Routes 🚍
+
+- **A1**: Internal loop (clockwise)
+- **A2**: Internal loop (counter-clockwise)
+- **D1**: Around campus (clockwise)
+- **D2**: Around campus (counter-clockwise)
+- **BTC**: Express service Kent Ridge ↔ University Town
+
+## Bus Stops 📍
+
+The API includes 15 bus stops across NUS campus:
+- PGP (Prince George's Park)
+- KR-BT (Kent Ridge Bus Terminal)
+- LT13, AS5, BIZ2
+- Central Library (CLB)
+- LT27, University Hall
+- YIH (Yusof Ishak House)
+- Museum, University Town
+- Raffles Hall, Kent Vale
+- COM2
+
+## Deployment 🌐
+
+### Deploy to Vercel (Recommended)
+
+1. **Install Vercel CLI:**
+   ```bash
+   npm install -g vercel
+   ```
+
+2. **Deploy:**
+   ```bash
+   vercel
+   ```
+
+3. **Follow the prompts** and your API will be live!
+
+**Or use the Vercel Dashboard:**
+- Connect your GitHub repository
+- Vercel will automatically detect the configuration
+- Deploy with one click
+
+### Deploy to Railway
+
+1. **Install Railway CLI:**
+   ```bash
+   npm install -g @railway/cli
+   ```
+
+2. **Login and deploy:**
+   ```bash
+   railway login
+   railway init
+   railway up
+   ```
+
+**Or use Railway Dashboard:**
+- Go to [railway.app](https://railway.app)
+- Create new project from GitHub repo
+- Deploy automatically
+
+### Deploy to Render
+
+1. **Go to [render.com](https://render.com)**
+2. **Create a new Web Service**
+3. **Connect your GitHub repository**
+4. **Render will use the `render.yaml` configuration**
+5. **Deploy!**
+
+### Deploy to Heroku
+
+1. **Install Heroku CLI**
+2. **Deploy:**
+   ```bash
+   heroku create your-app-name
+   git push heroku main
+   ```
+
+## Configuration ⚙️
+
+### Environment Variables
+
+You can set these in your deployment platform:
+
+- `PORT`: Server port (default: 3000)
+
+### Authentication
+
+Basic authentication is implemented but **disabled by default** for easier testing. 
+
+To enable authentication, uncomment this line in `server.js`:
+```javascript
+app.use(authenticate);
+```
+
+## Mock Data 📊
+
+The server generates realistic mock data including:
+
+- **Dynamic arrival times**: Buses arrive at random intervals (1-15 minutes)
+- **Passenger load**: Random load levels (Low/Medium/High)
+- **Bus positions**: Realistic GPS coordinates around NUS campus
+- **Operating hours**: Different schedules for weekdays, Saturdays, and holidays
+- **Multiple buses per route**: 2-4 buses operating on each route
+
+## Response Examples 📄
+
+### Get Shuttle Service
+```json
+{
+  "ShuttleServiceResult": {
+    "Timestamp": "2025-10-08T10:30:00.000Z",
+    "name": "University Town",
+    "caption": "University Town",
+    "shuttles": [
+      {
+        "name": "A1",
+        "arrivalTime": "180",
+        "nextArrivalTime": "900",
+        "arrivalTime_veh_plate": "PA1234A",
+        "nextArrivalTime_veh_plate": "PA5678B",
+        "passengers": "Low",
+        "nextPassengers": "Medium"
+      }
+    ]
+  }
+}
+```
+
+### Get Active Buses
+```json
+{
+  "ActiveBusResult": {
+    "Timestamp": "2025-10-08T10:30:00.000Z",
+    "ActiveBusCount": "3",
+    "activebus": [
+      {
+        "veh_plate": "PA1234A",
+        "lat": 1.30373,
+        "lng": 103.77434,
+        "speed": 25,
+        "direction": 1
+      }
+    ]
+  }
+}
+```
+
+## Frontend Integration 💻
+
+### JavaScript/Fetch
+```javascript
+const API_BASE = 'http://localhost:3000';
+
+// Get shuttle service
+async function getShuttleService(busStop) {
+  const response = await fetch(`${API_BASE}/ShuttleService?busstopname=${busStop}`);
+  const data = await response.json();
+  return data.ShuttleServiceResult;
+}
+
+// Get active buses
+async function getActiveBuses(routeCode) {
+  const response = await fetch(`${API_BASE}/ActiveBus?route_code=${routeCode}`);
+  const data = await response.json();
+  return data.ActiveBusResult;
+}
+```
+
+### React Example
+```jsx
+import { useEffect, useState } from 'react';
+
+function BusInfo() {
+  const [shuttles, setShuttles] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/ShuttleService?busstopname=UTOWN')
+      .then(res => res.json())
+      .then(data => setShuttles(data.ShuttleServiceResult.shuttles));
+  }, []);
+
+  return (
+    <div>
+      {shuttles.map(shuttle => (
+        <div key={shuttle.name}>
+          <h3>Route {shuttle.name}</h3>
+          <p>Arriving in: {shuttle.arrivalTime}s</p>
+          <p>Load: {shuttle.passengers}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## Project Structure 📁
+
+```
+nus-nextbus-mock-api/
+├── server.js           # Main Express server
+├── mockData.js         # Mock data generators
+├── package.json        # Dependencies and scripts
+├── vercel.json         # Vercel deployment config
+├── railway.json        # Railway deployment config
+├── render.yaml         # Render deployment config
+├── Procfile           # Heroku deployment config
+├── .gitignore         # Git ignore rules
+└── README.md          # This file
+```
+
+## Development 🛠️
+
+### Adding New Routes
+
+Edit `mockData.js` to add new bus routes:
+
+```javascript
+routes: {
+  "NEW_ROUTE": {
+    name: "NEW_ROUTE",
+    description: "Route description",
+    stops: ["STOP1", "STOP2"],
+    schedules: [...]
+  }
+}
+```
+
+### Modifying Bus Stops
+
+Add new bus stops in `mockData.js`:
+
+```javascript
+busStops: [
+  {
+    name: "NEWSTOP",
+    caption: "New Bus Stop",
+    ShortName: "NS",
+    LongName: "New Bus Stop Name",
+    latitude: 1.29xxx,
+    longitude: 103.77xxx
+  }
+]
+```
+
+## Testing 🧪
+
+You can test the API using:
+
+- **Interactive Tester** (Easiest): Open `test.html` in your browser - beautiful UI, no setup needed!
+- **Postman**: Import `postman_collection.json` for instant testing with all endpoints pre-configured
+- **Browser**: Visit `http://localhost:3000` and navigate to endpoints
+- **curl**: Use command line to test endpoints
+- **Your frontend app**: Point your app to the mock API
+
+## Troubleshooting 🔧
+
+### Port already in use
+```bash
+# Change the port
+PORT=4000 npm start
+```
+
+### CORS errors
+The server has CORS enabled by default. If you still face issues, check your frontend configuration.
+
+### Module not found
+```bash
+# Reinstall dependencies
+rm -rf node_modules package-lock.json
+npm install
+```
+
+## Credits 📝
+
+Based on the unofficial reverse-engineered NUS NextBus API specification by [Hu Jialun](https://github.com/SuibianP).
+
+## License 📄
+
+This is a mock API for development purposes. Please refer to the [original API disclaimer](https://github.com/SuibianP/nus-nextbus-new-api/blob/openapi-def/DISCLAIMER.md) for information about the actual NUS NextBus service.
+
+## Contributing 🤝
+
+Feel free to submit issues and enhancement requests!
+
+## Support ❤️
+
+If you find this useful, please star the repository!
+
+---
+
+**Happy Coding! 🚀**

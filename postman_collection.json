@@ -1,0 +1,201 @@
+{
+  "info": {
+    "name": "NUS NextBus Mock API",
+    "description": "Complete collection of NUS NextBus API endpoints for testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Publicity",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/publicity",
+          "host": ["{{baseUrl}}"],
+          "path": ["publicity"]
+        },
+        "description": "Get publicity information including banners and display frequency"
+      }
+    },
+    {
+      "name": "Bus Stops",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/BusStops",
+          "host": ["{{baseUrl}}"],
+          "path": ["BusStops"]
+        },
+        "description": "Get information about all bus stops on campus"
+      }
+    },
+    {
+      "name": "Pickup Points",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/PickupPoint?route_code=A1",
+          "host": ["{{baseUrl}}"],
+          "path": ["PickupPoint"],
+          "query": [
+            {
+              "key": "route_code",
+              "value": "A1",
+              "description": "Route code (A1, A2, D1, D2, BTC)"
+            }
+          ]
+        },
+        "description": "Get all pickup points for a specified route"
+      }
+    },
+    {
+      "name": "Shuttle Service",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/ShuttleService?busstopname=UTOWN",
+          "host": ["{{baseUrl}}"],
+          "path": ["ShuttleService"],
+          "query": [
+            {
+              "key": "busstopname",
+              "value": "UTOWN",
+              "description": "Bus stop name (UTOWN, PGP, KRB, CENLIB, etc.)"
+            }
+          ]
+        },
+        "description": "Get all oncoming shuttle bus services at a specified stop"
+      }
+    },
+    {
+      "name": "Active Buses",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/ActiveBus?route_code=A1",
+          "host": ["{{baseUrl}}"],
+          "path": ["ActiveBus"],
+          "query": [
+            {
+              "key": "route_code",
+              "value": "A1",
+              "description": "Route code (A1, A2, D1, D2, BTC)"
+            }
+          ]
+        },
+        "description": "Get all active buses on a specified route"
+      }
+    },
+    {
+      "name": "Bus Location",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/BusLocation?veh_plate=PA1234A",
+          "host": ["{{baseUrl}}"],
+          "path": ["BusLocation"],
+          "query": [
+            {
+              "key": "veh_plate",
+              "value": "PA1234A",
+              "description": "Vehicle plate number"
+            }
+          ]
+        },
+        "description": "Get information about a specific bus by vehicle plate"
+      }
+    },
+    {
+      "name": "Route Operating Hours",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/RouteMinMaxTime?route_code=A1",
+          "host": ["{{baseUrl}}"],
+          "path": ["RouteMinMaxTime"],
+          "query": [
+            {
+              "key": "route_code",
+              "value": "A1",
+              "description": "Route code (A1, A2, D1, D2, BTC)"
+            }
+          ]
+        },
+        "description": "Get the minimum and maximum operating time of a route"
+      }
+    },
+    {
+      "name": "Service Descriptions",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/ServiceDescription",
+          "host": ["{{baseUrl}}"],
+          "path": ["ServiceDescription"]
+        },
+        "description": "Get brief path descriptions for all routes"
+      }
+    },
+    {
+      "name": "Announcements",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/Announcements",
+          "host": ["{{baseUrl}}"],
+          "path": ["Announcements"]
+        },
+        "description": "Get all system announcements"
+      }
+    },
+    {
+      "name": "Ticker Tapes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/TickerTapes",
+          "host": ["{{baseUrl}}"],
+          "path": ["TickerTapes"]
+        },
+        "description": "Get all ticker tape messages"
+      }
+    },
+    {
+      "name": "Checkpoints",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/CheckPoint?route_code=A1",
+          "host": ["{{baseUrl}}"],
+          "path": ["CheckPoint"],
+          "query": [
+            {
+              "key": "route_code",
+              "value": "A1",
+              "description": "Route code (A1, A2, D1, D2, BTC)"
+            }
+          ]
+        },
+        "description": "Get all checkpoints of a specified route"
+      }
+    }
+  ]
+}
