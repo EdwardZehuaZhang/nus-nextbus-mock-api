@@ -260,23 +260,25 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Endpoint not found' });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚌 NUS NextBus Mock API Server running on port ${PORT}`);
-  console.log(`📍 Local: http://localhost:${PORT}`);
-  console.log(`\n📚 Available endpoints:`);
-  console.log(`   GET /publicity`);
-  console.log(`   GET /BusStops`);
-  console.log(`   GET /PickupPoint?route_code=A1`);
-  console.log(`   GET /ShuttleService?busstopname=UTOWN`);
-  console.log(`   GET /ActiveBus?route_code=A1`);
-  console.log(`   GET /BusLocation?veh_plate=PA1234A`);
-  console.log(`   GET /RouteMinMaxTime?route_code=A1`);
-  console.log(`   GET /ServiceDescription`);
-  console.log(`   GET /Announcements`);
-  console.log(`   GET /TickerTapes`);
-  console.log(`   GET /CheckPoint?route_code=A1`);
-  console.log(`\n🔑 Authentication is optional for testing`);
-});
+// Start server only if this file is run directly
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🚌 NUS NextBus Mock API Server running on port ${PORT}`);
+    console.log(`📍 Local: http://localhost:${PORT}`);
+    console.log(`\n📚 Available endpoints:`);
+    console.log(`   GET /publicity`);
+    console.log(`   GET /BusStops`);
+    console.log(`   GET /PickupPoint?route_code=A1`);
+    console.log(`   GET /ShuttleService?busstopname=UTOWN`);
+    console.log(`   GET /ActiveBus?route_code=A1`);
+    console.log(`   GET /BusLocation?veh_plate=PA1234A`);
+    console.log(`   GET /RouteMinMaxTime?route_code=A1`);
+    console.log(`   GET /ServiceDescription`);
+    console.log(`   GET /Announcements`);
+    console.log(`   GET /TickerTapes`);
+    console.log(`   GET /CheckPoint?route_code=A1`);
+    console.log(`\n🔑 Authentication is optional for testing`);
+  });
+}
 
 module.exports = app;
