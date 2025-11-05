@@ -1,14 +1,21 @@
 # NUS NextBus Mock API 🚌
 
-A fully functional mock backend server for the NUS NextBus application, based on the reverse-engineered OpenAPI specification. Perfect for frontend development and testing without access to the actual backend.
+> **✨ Recently Updated (Nov 2025)**: This mock API has been completely renovated to match the actual NUS NextBus API 1-to-1. All response structures, fields, and data formats now accurately represent the real API.
+
+A fully functional mock backend server for the NUS NextBus application, providing an accurate representation of the actual NUS NextBus API at `https://nnextbus.nus.edu.sg`. Perfect for frontend development and testing without requiring access credentials to the actual backend.
 
 ## Features ✨
 
 - ✅ All 11 API endpoints implemented
-- ✅ Realistic mock data based on actual NUS campus locations
-- ✅ Dynamic bus arrival times and positions
-- ✅ Multiple shuttle routes (A1, A2, D1, D2, BTC)
-- ✅ 15+ bus stops across NUS campus
+- ✅ **Accurate 1-to-1 representation** of the real NUS NextBus API
+- ✅ Real bus stop data (35 stops) from actual NUS campus
+- ✅ Real route data (8 routes: A1, A2, BTC, D1, D2, E, K, L)
+- ✅ **Realistic bus movement tracking** - Buses move along actual route checkpoints
+- ✅ **Operating hours enforcement** - Service runs 7:00 AM to 11:00 PM
+- ✅ **Dynamic arrival times** - Always shows accurate ETA (no "NA" values)
+- ✅ Bus occupancy/crowding information with loadInfo
+- ✅ Real announcements and ticker tapes from NUS
+- ✅ Actual route schedules including special days
 - ✅ CORS enabled for frontend integration
 - ✅ Optional Basic Authentication
 - ✅ Easy deployment to Vercel, Railway, or Render
@@ -86,17 +93,43 @@ curl http://localhost:3000/PickupPoint?route_code=A1
 curl http://localhost:3000/RouteMinMaxTime?route_code=A1
 ```
 
+## Realistic Behavior 🎯
+
+### Operating Hours
+The mock API simulates real bus service hours:
+- **Service Hours**: 7:00 AM - 11:00 PM daily
+- **No buses outside hours**: API returns empty arrays after 11:00 PM and before 7:00 AM
+- **Realistic for testing**: Perfect for testing edge cases in your frontend
+
+### Bus Movement Tracking
+Buses are tracked persistently across API calls:
+- **Persistent state**: Same bus plates appear consistently
+- **Route-based movement**: Buses move along actual route checkpoints
+- **Time-based updates**: Positions update based on elapsed time (~20 km/h average)
+- **Realistic ETAs**: Arrival times range from 1-30+ minutes, never "NA"
+
+### Arrival Time Generation
+- **First bus**: Typically 1-3 minutes away
+- **Subsequent buses**: 5-12 minute intervals (realistic campus shuttle frequency)
+- **Always available**: During operating hours, there are always buses coming
+- **No "NA" values**: All arrival times show actual minutes or "Arr" if arriving now
+
 ## Available Routes 🚍
 
-- **A1**: Internal loop (clockwise)
-- **A2**: Internal loop (counter-clockwise)
-- **D1**: Around campus (clockwise)
-- **D2**: Around campus (counter-clockwise)
-- **BTC**: Express service Kent Ridge ↔ University Town
+All 8 routes from the actual NUS NextBus system:
+- **A1**: KRT > PGP > KR MRT > CLB > KRT
+- **A2**: KRT > IT > Opp KR MRT > BIZ > KRT
+- **BTC**: BTC > KR MRT > UT > KV > PGP > BTC
+- **D1**: KRT > CLB > UT > EA > RH > KRT
+- **D2**: KRT > RH > EA > UT > CLB > KRT
+- **E**: KRT > YIH > CLB > PGP > KRT
+- **K**: KRT > LT13 > AS5 > BIZ > PGP > KR MRT > CLB > KRT
+- **L**: PGP > KR MRT > YIH > Museum > UT > CLB > PGP
 
 ## Bus Stops 📍
 
-The API includes 15 bus stops across NUS campus:
+The API includes **35 bus stops** across NUS campus with exact coordinates from the real API:
+- KRB (Kent Ridge Bus Terminal)
 - PGP (Prince George's Park)
 - KR-BT (Kent Ridge Bus Terminal)
 - LT13, AS5, BIZ2

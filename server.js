@@ -27,16 +27,12 @@ function authenticate(req, res, next) {
 // Apply auth to all routes (optional - can be commented out for easier testing)
 // app.use(authenticate);
 
-// Helper function to get current timestamp
-function getCurrentTimestamp() {
-  return new Date().toISOString();
-}
-
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
-    message: 'NUS NextBus Mock API',
+    message: 'NUS NextBus Mock API (Updated to match real API)',
     version: '2.0.0',
+    lastUpdated: '2025-11-05',
     endpoints: [
       '/publicity',
       '/BusStops',
@@ -55,6 +51,7 @@ app.get('/', (req, res) => {
 
 // GET /publicity
 app.get('/publicity', (req, res) => {
+  // Note: Real API returns 500 error for this endpoint
   res.json({
     banners: mockData.banners,
     frequency: 60
@@ -107,10 +104,11 @@ app.get('/ShuttleService', (req, res) => {
   
   res.json({
     ShuttleServiceResult: {
-      Timestamp: getCurrentTimestamp(),
+      TimeStamp: mockData.getCurrentTimestamp(),
       name: shuttleService.name,
       caption: shuttleService.caption,
-      shuttles: shuttleService.shuttles
+      shuttles: shuttleService.shuttles,
+      hints: []
     }
   });
 });
@@ -131,7 +129,7 @@ app.get('/ActiveBus', (req, res) => {
   
   res.json({
     ActiveBusResult: {
-      Timestamp: getCurrentTimestamp(),
+      TimeStamp: mockData.getCurrentTimestamp(),
       ActiveBusCount: activeBuses.length.toString(),
       activebus: activeBuses
     }
@@ -156,6 +154,8 @@ app.get('/BusLocation', (req, res) => {
   
   // Generate random location for the bus
   const randomStop = mockData.busStops[Math.floor(Math.random() * mockData.busStops.length)];
+  const occupancy = parseFloat((Math.random() * 0.9).toFixed(3));
+  const capacity = 88;
   
   res.json({
     BusLocationResult: {
@@ -163,8 +163,14 @@ app.get('/BusLocation', (req, res) => {
       lat: randomStop.latitude + (Math.random() - 0.5) * 0.002,
       lng: randomStop.longitude + (Math.random() - 0.5) * 0.002,
       speed: Math.floor(Math.random() * 40),
-      direction: Math.random() > 0.5 ? 1 : 2,
-      status: "true"
+      direction: parseFloat((Math.random() * 360).toFixed(1)),
+      status: "true",
+      loadInfo: {
+        occupancy: occupancy,
+        crowdLevel: occupancy < 0.33 ? "low" : occupancy < 0.66 ? "medium" : "high",
+        capacity: capacity,
+        ridership: Math.floor(occupancy * capacity)
+      }
     }
   });
 });
@@ -183,24 +189,20 @@ app.get('/RouteMinMaxTime', (req, res) => {
     return res.status(404).send('Service not found!');
   }
   
+  const schedules = mockData.generateRouteSchedules(routeCode);
+  
   res.json({
     RouteMinMaxTimeResult: {
-      RouteMinMaxTime: route.schedules
+      RouteMinMaxTime: schedules
     }
   });
 });
 
 // GET /ServiceDescription
 app.get('/ServiceDescription', (req, res) => {
-  const serviceDescriptions = Object.keys(mockData.routes).map(routeCode => ({
-    Route: routeCode,
-    RouteDescription: mockData.routes[routeCode].description,
-    Color: mockData.routes[routeCode].color
-  }));
-  
   res.json({
     ServiceDescriptionResult: {
-      ServiceDescription: serviceDescriptions
+      ServiceDescription: mockData.serviceDescriptions
     }
   });
 });
@@ -210,7 +212,7 @@ app.get('/Announcements', (req, res) => {
   res.json({
     AnnouncementsResult: {
       Announcement: mockData.announcements,
-      TimeStamp: getCurrentTimestamp()
+      TimeStamp: mockData.getCurrentTimestamp()
     }
   });
 });
@@ -220,7 +222,7 @@ app.get('/TickerTapes', (req, res) => {
   res.json({
     TickerTapesResult: {
       TickerTape: mockData.tickerTapes,
-      TimeStamp: getCurrentTimestamp()
+      TimeStamp: mockData.getCurrentTimestamp()
     }
   });
 });
@@ -265,13 +267,14 @@ if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`🚌 NUS NextBus Mock API Server running on port ${PORT}`);
     console.log(`📍 Local: http://localhost:${PORT}`);
+    console.log(`\n✨ Updated to match real NUS NextBus API (2025-11-05)`);
     console.log(`\n📚 Available endpoints:`);
     console.log(`   GET /publicity`);
     console.log(`   GET /BusStops`);
     console.log(`   GET /PickupPoint?route_code=A1`);
     console.log(`   GET /ShuttleService?busstopname=UTOWN`);
     console.log(`   GET /ActiveBus?route_code=A1`);
-    console.log(`   GET /BusLocation?veh_plate=PA1234A`);
+    console.log(`   GET /BusLocation?veh_plate=PD496S`);
     console.log(`   GET /RouteMinMaxTime?route_code=A1`);
     console.log(`   GET /ServiceDescription`);
     console.log(`   GET /Announcements`);
