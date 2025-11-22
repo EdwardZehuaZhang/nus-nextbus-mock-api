@@ -4,6 +4,8 @@
 
 A fully functional mock backend server for the NUS NextBus application, providing an accurate representation of the actual NUS NextBus API at `https://nnextbus.nus.edu.sg`. Perfect for frontend development and testing without requiring access credentials to the actual backend.
 
+[![GitHub stars](https://img.shields.io/github/stars/EdwardZehuaZhang/nus-nextbus-mock-api)](https://github.com/EdwardZehuaZhang/nus-nextbus-mock-api/stargazers)
+
 ## Features ✨
 
 - ✅ All 11 API endpoints implemented
