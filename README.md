@@ -11,7 +11,7 @@ A fully functional mock backend server for the NUS NextBus application, providin
 - ✅ All 11 API endpoints implemented
 - ✅ **Accurate 1-to-1 representation** of the real NUS NextBus API
 - ✅ Real bus stop data (35 stops) from actual NUS campus
-- ✅ Real route data (8 routes: A1, A2, BTC, D1, D2, E, K, L)
+- ✅ Real route data (8 routes: A1, A2, D1, D2, E, K, L)
 - ✅ **Realistic bus movement tracking** - Buses move along actual route checkpoints
 - ✅ **Operating hours enforcement** - Service runs 7:00 AM to 11:00 PM
 - ✅ **Dynamic arrival times** - Always shows accurate ETA (no "NA" values)
@@ -121,7 +121,6 @@ Buses are tracked persistently across API calls:
 All 8 routes from the actual NUS NextBus system:
 - **A1**: KRT > PGP > KR MRT > CLB > KRT
 - **A2**: KRT > IT > Opp KR MRT > BIZ > KRT
-- **BTC**: BTC > KR MRT > UT > KV > PGP > BTC
 - **D1**: KRT > CLB > UT > EA > RH > KRT
 - **D2**: KRT > RH > EA > UT > CLB > KRT
 - **E**: KRT > YIH > CLB > PGP > KRT

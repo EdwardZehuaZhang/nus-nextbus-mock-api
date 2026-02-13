@@ -399,12 +399,6 @@ const routes = {
     description: "KRT > IT > Opp KR MRT > BIZ > KRT",
     longName: "A2"
   },
-  "BTC": {
-    routeid: 90289,
-    name: "BTC",
-    description: "BTC > KR MRT > UT > KV > PGP > BTC",
-    longName: "BTC"
-  },
   "D1": {
     routeid: 90294,
     name: "D1",
@@ -540,7 +534,7 @@ function generateShuttleServices(busStopName) {
   
   // Determine which routes serve this stop based on real API data
   // For now, we'll use a simplified approach
-  const routeCodes = ['A1', 'A2', 'D1', 'D2', 'BTC', 'E', 'K', 'L'];
+  const routeCodes = ['A1', 'A2', 'D1', 'D2', 'E', 'K', 'L'];
   const numRoutes = getRandomInt(2, 4); // Each stop typically serves 2-4 routes
   
   for (let i = 0; i < numRoutes; i++) {

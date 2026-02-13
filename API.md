@@ -101,7 +101,7 @@ Get all pickup points (stops) for a specified route.
 **Endpoint:** `GET /PickupPoint`
 
 **Parameters:**
-- `route_code` (required) - Bus route code (A1, A2, D1, D2, BTC)
+- `route_code` (required) - Bus route code (A1, A2, D1, D2)
 
 **Example:** `/PickupPoint?route_code=A1`
 
@@ -335,7 +335,6 @@ Get brief path descriptions for all routes.
 - `A2` - Internal Loop (Counter-clockwise)
 - `D1` - Around Campus (Clockwise)
 - `D2` - Around Campus (Counter-clockwise)
-- `BTC` - Express Kent Ridge ↔ UTown
 
 ---
 
@@ -360,7 +359,7 @@ Get all system announcements.
         "Priority": "1",
         "Created_By": "System",
         "Created_On": "2025-10-08T00:00:00.000Z",
-        "Affected_Service_Ids": "A1,A2,D1,D2,BTC"
+        "Affected_Service_Ids": "A1,A2,D1,D2"
       }
     ]
   }
